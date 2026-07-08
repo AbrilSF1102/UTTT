@@ -1,0 +1,99 @@
+### Tabla: Alumno
+*Descripción: Almacena los datos personales y de identificación de los estudiantes matriculados.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Matricula | VARCHAR | 15 | PK, NN | Matrícula única del estudiante (Clave Primaria). |
+| Nombre | VARCHAR | 40 | NN | Nombre(s) del alumno. |
+| Apellido 1 | VARCHAR | 20 | NN | Primer apellido (paterno) del alumno. |
+| Apellido 2 | VARCHAR | 20 | NULL | Segundo apellido (materno) del alumno. |
+| Correo | VARCHAR | 100 | UQ, NN | Correo electrónico de contacto o institucional. |
+| Fechanaci | DATE | - | NN | Fecha de nacimiento del alumno. |
+
+### Tabla: Telefono
+*Descripción: Almacena los números telefónicos asociados a las matrículas de los alumnos.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Telid | INT | - | PK, NN | Identificador único del registro telefónico (Parte de la Clave Primaria compuesta). |
+| matricula fk | VARCHAR | 15 | PK, FK, NN | Matrícula del alumno al que pertenece el teléfono (Parte de la Clave Primaria compuesta). |
+| Numtel | VARCHAR | 15 | NN | Número telefónico de contacto del estudiante. |
+
+### Tabla: Credencial
+*Descripción: Registra las credenciales institucionales otorgadas de manera única a los alumnos.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numcrede | INT | - | PK, NN | Número de identificación único de la credencial (Clave Primaria). |
+| Fechainscr | DATE | - | NN | Fecha de inscripción o emisión del documento. |
+| Vigencia | DATE | - | NN | Fecha límite de validez de la credencial. |
+| matricula fk | VARCHAR | 15 | FK, UQ, NN | Clave foránea que asocia la credencial con un alumno (Es UNIQUE por su relación 1:1). |
+
+### Tabla: Cursa
+*Descripción: Tabla intermedia (Muchos a Muchos) que detalla las asignaturas cursadas por el alumno y sus calificaciones.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| matricula fk | VARCHAR | 15 | PK, FK, NN | Clave foránea que identifica al alumno (Parte de la Clave Primaria compuesta). |
+| Clavemate fk | VARCHAR | 10 | PK, FK, NN | Clave foránea que identifica la materia (Parte de la Clave Primaria compuesta). |
+| Fechainscr | DATE | - | NN | Fecha en la que se inscribió a cursar la asignatura. |
+| Califinal | DECIMAL | 4,2 | NULL | Calificación definitiva asignada al terminar el curso. |
+
+### Tabla: Materia
+*Descripción: Catálogo de asignaturas disponibles en la institución académica vinculadas a su profesor titular.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Clavemate | VARCHAR | 10 | PK, NN | Código único identificador de la asignatura (Clave Primaria). |
+| Nombremate | VARCHAR | 50 | NN | Nombre oficial de la materia. |
+| Creditos | INT | - | NN | Valor en créditos académicos asignados al curso. |
+| Numprof fk | INT | - | FK, NN | Identificador del profesor que imparte la materia (Clave Foránea). |
+
+### Tabla: Profesor
+*Descripción: Almacena los datos de los profesores y los vincula a su departamento académico.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numprof | INT | - | PK, NN | Número identificador único del profesor (Clave Primaria). |
+| Nombre | VARCHAR | 40 | NN | Nombre(s) del profesor. |
+| Apellido1 | VARCHAR | 20 | NN | Primer apellido (paterno) del profesor. |
+| Apellido2 | VARCHAR | 20 | NULL | Segundo apellido (materno) del profesor. |
+| Numdep fk | INT | - | FK, NN | Departamento académico al que está adscrito el profesor (Clave Foránea). |
+
+### Tabla: Departamento
+*Descripción: Registra las áreas administrativas o académicas de la institución.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numdepto | INT | - | PK, NN | Número identificador único del departamento (Clave Primaria). |
+| Nombredepto | VARCHAR | 50 | UQ, NN | Nombre oficial y único de la coordinación o departamento. |
+| Edificio | VARCHAR | 30 | NULL | Ubicación física o pabellón donde se encuentra el departamento. |
+
+### Tabla: Dependiente
+*Descripción: Registra a los familiares o dependientes económicos de los profesores (Entidad débil).*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numprof fk | INT | - | PK, FK, NN | Clave foránea que asocia al profesor responsable (Parte de la Clave Primaria compuesta). |
+| Nombre | VARCHAR | 50 | PK, NN | Nombre completo del dependiente (Parte de la Clave Primaria compuesta). |
+| Fechanaci | DATE | - | NN | Fecha de nacimiento del dependiente. |
+| Parentesco | VARCHAR | 30 | NN | Tipo de relación o vínculo familiar (ej. hijo, cónyuge). |
+
+### Tabla: Participa
+*Descripción: Tabla intermedia (Muchos a Muchos) que vincula a los profesores con los proyectos de investigación o desarrollo.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numprof fk | INT | - | PK, FK, NN | Clave foránea que referencia al profesor participante (Parte de la Clave Primaria compuesta). |
+| Numproj fk | INT | - | PK, FK, NN | Clave foránea que referencia al proyecto (Parte de la Clave Primaria compuesta). |
+| rol | VARCHAR | 40 | NN | Función o rol desempeñado por el docente dentro del proyecto. |
+| fechainicio | DATE | - | NN | Fecha en la que el profesor se integró al proyecto. |
+
+### Tabla: Proyecto
+*Descripción: Catálogo de proyectos institucionales vigentes.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numproj | INT | - | PK, NN | Número identificador único del proyecto (Clave Primaria). |
+| Nombre | VARCHAR | 50 | NN | Nombre comercial o descriptivo del proyecto. |
+| Presupuesto | DECIMAL | 12,2 | NULL | Recursos económicos financieros asignados al desarrollo del proyecto. |

@@ -1,0 +1,65 @@
+### Tabla: Employee
+*Descripción: Almacena los datos personales, laborales y de supervisión de los empleados.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Employeeid | INT | - | PK, NN | Identificador único del empleado (Clave Primaria). |
+| Ssn | VARCHAR | 11 | UQ, NN | Número de Seguridad Social (Único). |
+| Firstname | VARCHAR | 30 | NN | Primer nombre del empleado. |
+| Lastname | VARCHAR | 30 | NN | Apellido(s) del empleado. |
+| Address | VARCHAR | 100 | NULL | Dirección residencial del empleado. |
+| Salary | DECIMAL | 10,2 | NULL | Salario mensual asignado. |
+| Sex | CHAR | 1 | NULL | Género o sexo del empleado. |
+| Birthday | DATE | - | NULL | Fecha de nacimiento del empleado. |
+| Numberdep fk | INT | - | FK, NN | Identificador del departamento al que pertenece (Clave Foránea). |
+| Jef fk | INT | - | FK, NULL | Referencia al Employeeid del jefe o supervisor directo (Relación recursiva). |
+
+### Tabla: Department
+*Descripción: Registra los departamentos de la empresa y la asignación de sus gerentes.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumberDep | INT | - | PK, NN | Número identificador único del departamento (Clave Primaria). |
+| NameDep | VARCHAR | 50 | UQ, NN | Nombre oficial y único del departamento. |
+| Manager fk | INT | - | FK, UQ, NN | Clave foránea que referencia al Employeeid del empleado que gerencia el área (Único). |
+| Stardate | DATE | - | NULL | Fecha de inicio del cargo como gerente. |
+
+### Tabla: Works_ON
+*Descripción: Tabla intermedia (Muchos a Muchos) que registra las horas invertidas por los empleados en los proyectos.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Employeeid fk | INT | - | PK, FK, NN | Identificador del empleado asignado (Parte de Clave Primaria / Foránea). |
+| Numberproj fk | INT | - | PK, FK, NN | Identificador del proyecto asignado (Parte de Clave Primaria / Foránea). |
+| hours | DECIMAL | 5,2 | NULL | Cantidad de horas trabajadas por el empleado en este proyecto. |
+
+### Tabla: Dependent
+*Descripción: Almacena la información de los familiares o dependientes económicos de cada empleado.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Dependentid | INT | - | PK, NN | Identificador único del dependiente (Clave Primaria). |
+| Employeeid fk | INT | - | FK, NN | Identificador del empleado con el que está vinculado el dependiente (Clave Foránea). |
+| Sex | CHAR | 1 | NULL | Género o sexo del dependiente. |
+| Birthday | DATE | - | NULL | Fecha de nacimiento del dependiente. |
+| Relationship | VARCHAR | 30 | NULL | Tipo de parentesco o relación familiar (hijo, cónyuge, etc.). |
+| Name | VARCHAR | 50 | NN | Nombre completo del dependiente. |
+
+### Tabla: Project
+*Descripción: Catálogo de proyectos controlados por los departamentos de la organización.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| NumberProj | INT | - | PK, NN | Número identificador único del proyecto (Clave Primaria). |
+| NameProj | VARCHAR | 50 | UQ, NN | Nombre oficial y único del proyecto. |
+| Location | VARCHAR | 50 | NULL | Ubicación o sede donde se ejecuta el proyecto. |
+| Numberdep fk | INT | - | FK, NN | Departamento que controla y coordina el proyecto (Clave Foránea). |
+
+### Tabla: Locations
+*Descripción: Registra las diferentes sedes o ubicaciones físicas que corresponden a cada departamento.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numlocation | INT | - | PK, NN | Identificador único de la ubicación física (Clave Primaria). |
+| Namelocations | VARCHAR | 50 | NN | Nombre o descripción de la sede o zona geográfica. |
+| Numberdep fk | INT | - | FK, NN | Departamento al que pertenece dicha ubicación (Clave Foránea). |
