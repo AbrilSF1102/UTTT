@@ -1,0 +1,67 @@
+### Tabla: Employee
+*Descripción: Almacena la información personal, laboral y jerárquica de los empleados de la empresa.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Ssn | INT / VARCHAR | 11 | PK, NN | Número de Seguridad Social. Identificador único del empleado. |
+| Firstname | VARCHAR | 30 | NN | Primer nombre del empleado. |
+| Lastname | VARCHAR | 30 | NN | Apellido(s) del empleado. |
+| Address | VARCHAR | 100 | NULL | Dirección de residencia del empleado. |
+| Sex | CHAR | 1 | NULL | Género o sexo del empleado (M/F). |
+| Salary | DECIMAL | 10,2 | NULL | Salario o sueldo asignado al empleado. |
+| Birthday | DATE | - | NULL | Fecha de nacimiento del empleado. |
+| Numberdep | INT | - | FK, NN | Identificador del departamento al que pertenece (Clave Foránea). |
+| Namedep | VARCHAR | 50 | FK, NN | Nombre del departamento asociado (Clave Foránea compuesta junto con Numberdep). |
+| Jef_ssn | INT / VARCHAR | 11 | FK, NULL | Clave foránea que referencia al Ssn del supervisor o jefe directo (Relación recursiva). |
+
+### Tabla: Department
+*Descripción: Registra las áreas o departamentos de la organización y sus respectivos gerentes.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Name | VARCHAR | 50 | PK, NN | Nombre único del departamento. |
+| Number | INT | - | PK, NN | Número identificador del departamento. *(Forma una clave primaria compuesta junto con Name)*. |
+| Manager_fk | INT / VARCHAR | 11 | FK, UQ, NN | Clave foránea que conecta con el Ssn del empleado que funge como gerente del departamento. |
+| Startdate | DATE | - | NULL | Fecha en la que el gerente comenzó a dirigir el departamento. |
+
+### Tabla: Dependent
+*Descripción: Almacena la información de los dependientes o familiares asociados a cada empleado (Entidad débil).*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Name | VARCHAR | 50 | PK, NN | Nombre completo del dependiente (Clave primaria parcial/compuesta). |
+| Ssn_fk | INT / VARCHAR | 11 | PK, FK, NN | Clave foránea que identifica al empleado del cual depende el familiar. |
+| Sex | CHAR | 1 | NULL | Sexo o género del dependiente. |
+| Birthday | DATE | - | NULL | Fecha de nacimiento del dependiente. |
+| Relationship | VARCHAR | 30 | NULL | Relación o parentesco con el empleado (ej. Hijo, Cónyuge). |
+
+### Tabla: Works-on
+*Descripción: Tabla intermedia (Muchos a Muchos) que desglosa las horas dedicadas por cada empleado a los distintos proyectos.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Ssn_fk | INT / VARCHAR | 11 | PK, FK, NN | Clave foránea que identifica al empleado asignado. |
+| Nameproject | VARCHAR | 50 | PK, FK, NN | Nombre del proyecto asociado (Parte de la clave foránea compuesta de Proyecto). |
+| Number | INT | - | PK, FK, NN | Número del proyecto asociado (Parte de la clave foránea compuesta de Proyecto). |
+| Hours | DECIMAL | 5,2 | NULL | Número de horas asignadas o trabajadas por el empleado en el proyecto. |
+
+### Tabla: Project
+*Descripción: Catálogo de los proyectos desarrollados por la empresa, organizados por departamento.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Name | VARCHAR | 50 | PK, NN | Nombre único del proyecto. |
+| Number | INT | - | PK, NN | Número único asignado al proyecto. *(Junto con Name forma la clave primaria compuesta)*. |
+| Location | VARCHAR | 50 | NULL | Ubicación geográfica o sede donde se desarrolla el proyecto. |
+| Namedep_fk | VARCHAR | 50 | FK, NN | Nombre del departamento que controla el proyecto (Clave Foránea compuesta). |
+| Numberdep_fk | INT | - | FK, NN | Número del departamento que controla el proyecto (Clave Foránea compuesta). |
+
+### Tabla: Location
+*Descripción: Registra las diferentes ubicaciones físicas o sedes que posee cada departamento.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numberlocation | INT | - | PK, NN | Código único asignado a la ubicación (Clave Primaria). |
+| Namelocation | VARCHAR | 50 | NN | Nombre o descripción de la zona geográfica o sede. |
+| Namedep_fk | VARCHAR | 50 | FK, NN | Clave foránea que vincula la ubicación con el departamento (Parte 1). |
+| Numberdep_fk | INT | - | FK, NN | Clave foránea que vincula la ubicación con el departamento (Parte 2). |

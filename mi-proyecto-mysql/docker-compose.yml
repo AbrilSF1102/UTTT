@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db-mysql:
+    image: mysql:latest
+    container_name: Server-MySQLG1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456'     # Contraseña del usuario root
+      MYSQL_DATABASE: 'mi_base_de_datos' # Base de datos inicial que se creará automáticamente
+      MYSQL_USER: 'usuario_app'          # Usuario secundario opcional
+      MYSQL_PASSWORD: 'password123'      # Contraseña del usuario secundario
+    ports:
+      - "3306:3306"
+    volumes:
+      - v-mysql-data:/var/lib/mysql               # Volumen para la persistencia de datos
+      - ./init:/docker-entrypoint-initdb.d/       # Ejecuta los scripts .sql automáticamente al iniciar por primera vez
+
+volumes:
+  v-mysql-data:
+    name: v-mysql-data

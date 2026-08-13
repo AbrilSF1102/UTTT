@@ -1,0 +1,30 @@
+### Tabla: Alumno
+*Descripción: Almacena la información de identificación, nombres y semestre actual de los estudiantes.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Idalumno | INT | - | PK, NN | Identificador único del alumno. |
+| Matricula | VARCHAR | 10 | UQ, NN | Matrícula única del estudiante. *(En la libreta se especifica como UNICODE/UNIQUE)* |
+| Nombre | NVARCHAR | 40 | NN | Nombre(s) del alumno. |
+| Apellido1 | NVARCHAR | 20 | NN | Primer apellido (paterno) del alumno. |
+| Apellido2 | NVARCHAR | 20 | NULL | Segundo apellido (materno) del alumno. |
+| Semestre | VARCHAR | 10 | NN | Ciclo o semestre actual que cursa el alumno. |
+
+### Tabla: Materia
+*Descripción: Catálogo de asignaturas disponibles en la institución académica.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numateria | INT | - | PK, NN | Identificador único numérico de la materia. |
+| Nombre | NVARCHAR | 30 | UQ, NN | Nombre oficial y único de la asignatura. |
+| Creditos | INT | - | NN, CK | Valor en créditos académicos asignados a la materia. |
+
+### Tabla: Inscribe
+*Descripción: Tabla intermedia (relación de muchos a muchos) que registra la inscripción de alumnos en las distintas materias junto con su rendimiento académico.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Idalumno | INT | - | FK, NN | Identificador del alumno relacionado (Clave Foránea). |
+| Nummateria | INT | - | FK, NN | Identificador de la materia relacionada (Clave Foránea). |
+| Fechainicio | DATE | - | NN | Fecha en la que inicia o se registra la inscripción al curso. |
+| Califinal | DECIMAL | 10,2 | NN | Calificación definitiva obtenida en la asignatura. |

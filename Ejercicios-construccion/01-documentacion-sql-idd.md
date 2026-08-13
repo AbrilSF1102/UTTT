@@ -88,3 +88,15 @@ y especialmente en **postgreSQL**. Con snake_case evitan problemas de mayusculas
 -uq_cliente_corrreo_electronico
 -ck_product_precio
 -df_cliente_activo
+
+## Alter table
+ Permite modificar una tanla existente 
+
+ - Agregar clumnaas
+ -Elminar columnas
+ -moficar columnas
+ -Agraar restricciones
+ -eliminar restriccions
+
+
+ se determino el tema de create alter y drop dodne se crearon tablas restrccions (pk fk )

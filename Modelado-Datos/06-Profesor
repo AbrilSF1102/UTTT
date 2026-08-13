@@ -1,0 +1,28 @@
+### Tabla: Profesor
+* Descripción: Almacena los datos de identificación y el nombre completo de los profesores de la institución.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Idprofesor | INT | - | PK, NN | Identificador único del profesor (Clave Primaria). |
+| Nombre | NVARCHAR | 40 | NN | Nombre(s) del profesor. |
+| Apellido1 | NVARCHAR | 20 | NN | Primer apellido (paterno) del profesor. |
+| Apellido2 | NVARCHAR | 20 | NULL | Segundo apellido (materno) del profesor (opcional). |
+
+### Tabla: Curso
+*Descripción: Almacena las asignaturas o cursos que se ofertan, vinculándolos con el profesor que los imparte.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numcurso | INT | - | PK, NN | Identificador único del curso. |
+| Nombre | NVARCHAR | 20 | NN | Nombre oficial del curso. |
+| Creditos | INT | - | NN, CK | Créditos académicos asignados (incluye validación CHECK). |
+| Idprofesor | INT | - | FK, NULL | Identificador del profesor que imparte el curso (Clave Foránea). |
+
+### Tabla: Especialidad
+*Descripción: Registra las especialidades académicas o áreas de conocimiento asignadas a los profesores.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Idespecialidad | INT | - | PK, NN | Identificador único de la especialidad. |
+| Idprofesor | INT | - | FK, NN | Identificador del profesor que posee esta especialidad (Clave Foránea). |
+| Nombre | VARCHAR | 50 | NN | Nombre o descripción de la especialidad. *(En el cuaderno aparece como "Nombre:", se le asigna un tipo estándar)* |

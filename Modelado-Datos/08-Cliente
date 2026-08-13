@@ -1,0 +1,35 @@
+### Tabla: Cliente
+*Descripción: Almacena la información de identificación y procedencia corporativa de los clientes.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Clienteid | INT | - | PK, NN | Identificador único del cliente (Clave Primaria). |
+| Rfc | CHAR | 13 | NULL | Registro Federal de Contribuyentes (u homólogo fiscal de identificación comercial). |
+| Empresa | VARCHAR | 70 | NN | Nombre o razón social de la empresa del cliente. |
+
+### Tabla: Pedido
+*Descripción: Registra las órdenes o pedidos de compra globales realizados por los clientes.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numpedido | INT | - | PK, NN | Identificador único del pedido (Clave Primaria). |
+| Fechaped | DATE | - | NN | Fecha de emisión o realización del pedido. |
+| Cliente | INT | - | FK, NN | Identificador del cliente que realizó la orden (Clave Foránea). |
+
+### Tabla: Detalle_Venta
+*Descripción: Tabla intermedia que desglosa los productos específicos contenidos dentro de cada pedido y sus cantidades.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numped | INT | - | FK, NN | Identificador del pedido asociado (Clave Foránea). |
+| Numprod | INT | - | FK, NN | Identificador del producto comprado (Clave Foránea). |
+| Cantidad | INT | - | NN | Cantidad de unidades adquiridas de dicho producto. |
+
+### Tabla: Producto
+*Descripción: Catálogo general de los productos o artículos ofertados en el inventario.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Numprod | INT | - | PK, NN | Identificador único del producto (Clave Primaria). |
+| Nombre Prod | VARCHAR | 50 | NN | Nombre comercial o descripción corta del artículo. |
+| Precio | DECIMAL | 12,4 | NN | Costo unitario de venta asignado al artículo. *(En el cuaderno aparece como decimal(12,4))* |

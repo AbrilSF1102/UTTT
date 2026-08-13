@@ -1,0 +1,19 @@
+### Tabla: Paciente
+*Descripción: Almacena los datos de identificación y personales de cada paciente.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| IdPaciente | INT | - | PK, NN | Identificador único del paciente (Clave Primaria). |
+| Nombre pas | VARCHAR | 20 | NN | Primer nombre del paciente. |
+| Apellido1 paciente | VARCHAR | 20 | NN | Primer apellido (paterno) del paciente. |
+| Apellido2 | VARCHAR | 20 | NULL | Segundo apellido (materno) del paciente. *(Se define como opcional)* |
+| Fechanaci | DATE | - | NN | Fecha de nacimiento del paciente. |
+
+### Tabla: Expediente
+*Descripción: Almacena el registro de los expedientes clínicos asignados de manera única a los pacientes.*
+
+| Campo | Tipo | Longitud | Restricciones | Descripción |
+| :--- | :--- | :--- | :--- | :--- |
+| Idexp | INT | - | PK, NN | Identificador único del expediente clínico. |
+| Fechaapertura | DATE | - | NN | Fecha en la que se realizó la apertura del expediente. |
+| Idpaciente | INT | - | FK, UQ, NN | Clave foránea que conecta con la tabla Paciente. Al ser UNIQUE asegura la relación 1:1. |
