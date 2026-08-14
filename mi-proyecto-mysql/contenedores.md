@@ -53,7 +53,6 @@ docker volume create v-mariadbg1
 docker run -d --name Server-MariadbG1 -p 3343:3306 -e MARIADB_ROOT_PASSWORD=123456 -v v-mariadbg1:/var/lib/mysql e0236
 
 
-
 ### Contenedor de postgres con Volumen
 docker
 docker volume create v-postgresg1
